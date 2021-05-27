@@ -1,5 +1,7 @@
 ﻿using CodeAssessment.Models;
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace CodeAssessment.Services
 {
@@ -18,11 +20,9 @@ namespace CodeAssessment.Services
         /// <summary>
         /// Retrieve weather data for 5 days in 3 hour increments from the weather API.
         /// </summary>
-        public WeatherApiResponse RetrieveWeatherData()
+        public async Task<WeatherApiResponse> RetrieveWeatherDataAsync()
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

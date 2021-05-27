@@ -1,4 +1,5 @@
 using CodeAssessment.Services;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CodeAssessment.Tests
@@ -10,10 +11,10 @@ namespace CodeAssessment.Tests
         private readonly WeatherApiService _weatherService = new(WeatherDataApiUrl);
 
         [Fact]
-        public void ProducesResultData()
+        public async Task ProducesResultData()
         {
             // verify weather data is returned.
-            var results = _weatherService.RetrieveWeatherData();
+            var results = await _weatherService.RetrieveWeatherDataAsync();
 
             Assert.NotNull(results);
 
