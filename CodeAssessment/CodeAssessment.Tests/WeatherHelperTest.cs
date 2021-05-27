@@ -78,19 +78,19 @@ namespace CodeAssessment.Tests
             records = BuildRecords(new List<(int, WeatherCondition)> { (60, WeatherCondition.Clear), (65, WeatherCondition.Rain), (55, WeatherCondition.Rain) });
 
             contactMethod = WeatherHelper.GetOptimalContactMethodForWeatherRecords(records);
-            Assert.Equal(ContactMethod.Phone, contactMethod);
+            Assert.NotEqual(ContactMethod.Phone, contactMethod);
 
             // check that not rainy and below 55 fails
             records = BuildRecords(new List<(int, WeatherCondition)> { (50, WeatherCondition.Clear), (45, WeatherCondition.Clear), (55, WeatherCondition.Rain) });
 
             contactMethod = WeatherHelper.GetOptimalContactMethodForWeatherRecords(records);
-            Assert.Equal(ContactMethod.Phone, contactMethod);
+            Assert.NotEqual(ContactMethod.Phone, contactMethod);
 
             // check that not rainy and above 55 fails
             records = BuildRecords(new List<(int, WeatherCondition)> { (60, WeatherCondition.Clear), (65, WeatherCondition.Rain), (55, WeatherCondition.Clear) });
 
             contactMethod = WeatherHelper.GetOptimalContactMethodForWeatherRecords(records);
-            Assert.Equal(ContactMethod.Phone, contactMethod);
+            Assert.NotEqual(ContactMethod.Phone, contactMethod);
         }
 
         private IEnumerable<WeatherRecord> BuildRecords(IEnumerable<(int temp, WeatherCondition condition)> tempsAndConditions)
