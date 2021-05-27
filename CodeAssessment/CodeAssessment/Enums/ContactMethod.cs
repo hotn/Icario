@@ -5,6 +5,7 @@
     /// </summary>
     public enum ContactMethod
     {
+        Unknown,
         Email,
         Phone,
         Text

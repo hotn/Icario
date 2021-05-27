@@ -15,7 +15,7 @@ namespace CodeAssessment.Helpers
         /// </summary>
         /// <param name="records">Records to analyze.</param>
         /// <returns>Optimal contact method for weather records.</returns>
-        public static ContactMethod GetOptimalContactMethodForWeatherRecords(List<WeatherRecord> records)
+        public static ContactMethod GetOptimalContactMethodForWeatherRecords(IEnumerable<WeatherRecord> records)
         {
             throw new NotImplementedException();
         }
@@ -25,7 +25,7 @@ namespace CodeAssessment.Helpers
         /// </summary>
         /// <param name="records">Records to analyze.</param>
         /// <returns>Weather description for weather records.</returns>
-        public static string GetWeatherDescriptionForWeatherRecords(List<WeatherRecord> records)
+        public static string GetWeatherDescriptionForWeatherRecords(IEnumerable<WeatherRecord> records)
         {
             throw new NotImplementedException();
         }

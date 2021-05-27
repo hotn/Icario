@@ -8,7 +8,12 @@ namespace CodeAssessment.Services
     /// </summary>
     public class WeatherApiService
     {
-        private const string WeatherDataApiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=minneapolis,us&units=imperial&APPID=09110e603c1d5c272f94f64305c09436";
+        private readonly string _apiUrl;
+
+        public WeatherApiService(string apiUrl)
+        {
+            _apiUrl = apiUrl;
+        }
 
         /// <summary>
         /// Retrieve weather data for 5 days in 3 hour increments from the weather API.

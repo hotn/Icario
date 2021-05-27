@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using CodeAssessment.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace CodeAssessment.Models
 {
@@ -16,6 +18,10 @@ namespace CodeAssessment.Models
         /// Date of weather record in Unix timestamp format.
         /// </summary>
         public int Dt { get; set; }
+
+        public WeatherRecordMainProperties Main { get; set; }
+
+        public WeatherRecordWeatherProperties Weather { get; set; }
 
 
         public class WeatherRecordMainProperties
@@ -35,6 +41,21 @@ namespace CodeAssessment.Models
             /// This will return less specific values, such as "rain" rather than "light rain" or "heavy rain".
             /// </remarks>
             public string Main { get; set; }
+
+            /// <summary>
+            /// Typed representation of <see cref="Main"/>.
+            /// </summary>
+            public WeatherCondition Condition {
+                get
+                {
+                    if (Enum.TryParse(typeof(WeatherCondition), Main, out object result))
+                    {
+                        return (WeatherCondition)result;
+                    }
+
+                    return WeatherCondition.Unknown;
+                }
+            }
         }
     }
 }
