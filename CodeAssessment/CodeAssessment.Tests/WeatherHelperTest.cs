@@ -74,14 +74,20 @@ namespace CodeAssessment.Tests
             var contactMethod = WeatherHelper.GetOptimalContactMethodForWeatherRecords(records);
             Assert.Equal(ContactMethod.Phone, contactMethod);
 
-            // check that rainy and above 55 fails
-            records = BuildRecords(new List<(int, WeatherCondition)> { (60, WeatherCondition.Clear), (65, WeatherCondition.Rain), (55, WeatherCondition.Rain) });
+            // check that rainy or below 55 passes (check rainy first, noting that 55-75 degrees should result in "email" regardless of conditions)
+            records = BuildRecords(new List<(int, WeatherCondition)> { (50, WeatherCondition.Rain), (45, WeatherCondition.Clear), (55, WeatherCondition.Rain) });
 
             contactMethod = WeatherHelper.GetOptimalContactMethodForWeatherRecords(records);
-            Assert.NotEqual(ContactMethod.Phone, contactMethod);
+            Assert.Equal(ContactMethod.Phone, contactMethod);
 
-            // check that not rainy and below 55 fails
+            // check that rainy or below 55 passes (now check temp)
             records = BuildRecords(new List<(int, WeatherCondition)> { (50, WeatherCondition.Clear), (45, WeatherCondition.Clear), (55, WeatherCondition.Rain) });
+
+            contactMethod = WeatherHelper.GetOptimalContactMethodForWeatherRecords(records);
+            Assert.Equal(ContactMethod.Phone, contactMethod);
+
+            // check that rainy and above 55 fails
+            records = BuildRecords(new List<(int, WeatherCondition)> { (60, WeatherCondition.Clear), (65, WeatherCondition.Rain), (55, WeatherCondition.Rain) });
 
             contactMethod = WeatherHelper.GetOptimalContactMethodForWeatherRecords(records);
             Assert.NotEqual(ContactMethod.Phone, contactMethod);
