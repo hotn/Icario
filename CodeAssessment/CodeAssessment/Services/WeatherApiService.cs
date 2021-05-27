@@ -32,7 +32,7 @@ namespace CodeAssessment.Services
 
             var json = await response.Content.ReadAsStringAsync();
 
-            return JsonSerializer.Deserialize<WeatherApiResponse>(json);
+            return JsonSerializer.Deserialize<WeatherApiResponse>(json, new() { PropertyNameCaseInsensitive = true });
         }
     }
 }

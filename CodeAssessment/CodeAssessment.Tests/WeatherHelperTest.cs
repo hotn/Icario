@@ -105,7 +105,10 @@ namespace CodeAssessment.Tests
                     },
                     Weather = new()
                     {
-                        Main = condition.ToString()
+                        new()
+                        {
+                            Main = condition.ToString()
+                        }
                     }
                 };
             }
