@@ -23,3 +23,10 @@ I hope you have an udderly amazing day!
     )_ \__;      ";"          :_ ;  \_\       `,','
     :__\  \    * `,'*         \  \  :  \   *  8`;'*  *
         `^'     \ :/           `^'  `-^-'   \v/ :  \/ 
+
+
+If I have sent a link to you, the directions to run are as follows:
+
+1. Open solution in Visual Studio
+2. Run CodeAssessment project to see weather-related info.
+3. Run tests in CodeAssessment.Tests project to test business logic.
