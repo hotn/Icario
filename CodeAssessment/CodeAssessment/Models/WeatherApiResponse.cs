@@ -17,7 +17,7 @@ namespace CodeAssessment.Models
         /// <summary>
         /// Date of weather record in Unix timestamp format.
         /// </summary>
-        public int Dt { get; set; }
+        public long Dt { get; set; }
 
         /// <summary>
         /// Primary weather properties for the time of the record.

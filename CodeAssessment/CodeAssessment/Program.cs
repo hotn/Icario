@@ -1,21 +1,64 @@
-﻿namespace CodeAssessment
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using CodeAssessment.Services;
+using CodeAssessment.Extensions;
+using System.Collections.Generic;
+using CodeAssessment.Enums;
+using CodeAssessment.Helpers;
+
+namespace CodeAssessment
 {
     class Program
     {
         // TODO: in real app, move this to a config file, environment variable, db record, etc.
         private const string WeatherDataApiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=minneapolis,us&units=imperial&APPID=09110e603c1d5c272f94f64305c09436";
 
-        static void Main(string[] args)
+        private static readonly WeatherApiService _weatherApiService = new(WeatherDataApiUrl);
+
+        static async Task Main(string[] args)
         {
-            // TODO: retrieve weather
+            await RunProgram();
 
-            // TODO: separate weather details out into days
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadKey();
+        }
 
-            // TODO: process each day to find optimal contact method
+        private static async Task RunProgram()
+        {
+            // retrieve weather
+            var weatherData = await _weatherApiService.RetrieveWeatherDataAsync();
 
-            // TODO: handle non-match cases where weather conditions don't match a contact method
+            // separate weather details out into days
+            var dayGroups = weatherData.List.GroupBy(record => record.Dt.ToDateTime().Day).OrderBy(group => group.First().Dt);
 
-            // TODO: print out contact method and weather description, or warning if no match
+            // process each day to find optimal contact method
+            var contactMethods = new List<ContactMethod>();
+            foreach (var days in dayGroups)
+            {
+                contactMethods.Add(WeatherHelper.GetOptimalContactMethodForWeatherRecords(days));
+            }
+
+            // print out contact method and weather description, or warning if no match
+            for (var i = 0; i < dayGroups.Count(); i++)
+            {
+                var dayGroup = dayGroups.Skip(i).First();
+                var contactMethod = contactMethods[i];
+                var dailyCondition = dayGroup
+                    .SelectMany(group => group.Weather)
+                    .Select(weather => weather.Condition)
+                    .GroupBy(weather => weather)
+                    .OrderByDescending(group => group.Count())
+                    .First().Key;
+
+                Console.WriteLine("**************************");
+                Console.WriteLine($"Date: {dayGroup.First().Dt.ToDateTime().ToShortDateString()}");
+                Console.WriteLine($"Average Temperature: {Math.Round(WeatherHelper.GetAverageTemperatureForWeatherRecords(dayGroup))}°F");
+                Console.WriteLine($"Prevalent Weather Condition: {WeatherHelper.GetPrevalentWeatherConditionForRecords(dayGroup)}");
+                Console.WriteLine($"Best Contact Method: {WeatherHelper.GetOptimalContactMethodForWeatherRecords(dayGroup)}");
+                Console.WriteLine("**************************");
+                Console.WriteLine(Environment.NewLine);
+            }
         }
     }
 }
