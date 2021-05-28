@@ -6,6 +6,7 @@ using CodeAssessment.Extensions;
 using System.Collections.Generic;
 using CodeAssessment.Enums;
 using CodeAssessment.Helpers;
+using CodeAssessment.Models;
 
 namespace CodeAssessment
 {
@@ -27,7 +28,25 @@ namespace CodeAssessment
         private static async Task RunProgram()
         {
             // retrieve weather
-            var weatherData = await _weatherApiService.RetrieveWeatherDataAsync();
+            WeatherApiResponse weatherData = null;
+            try
+            {
+                weatherData = await _weatherApiService.RetrieveWeatherDataAsync();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Exception has occurred.");
+                Console.WriteLine(e.Message);
+            }
+
+            if (weatherData == null)
+            {
+                Console.WriteLine("An error occurred and the app cannot provide weather information.");
+                Console.WriteLine("Press any key to exit.");
+                Console.ReadKey();
+
+                return;
+            }
 
             // separate weather details out into days
             var dayGroups = weatherData.List.GroupBy(record => record.Dt.ToDateTime().Day).OrderBy(group => group.First().Dt);
